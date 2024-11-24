@@ -9,13 +9,14 @@ import {
   TextInput,
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
 const ImageCard = ({ image, description, name, onPress }) => (
   <View style={styles.imageCard}>
     <Text style={styles.text}>{name}</Text>
     <Image source={{ uri: image }} style={styles.image} />
     <Text style={styles.description}>{description}</Text>
-    <Button title="Modificar" onPress={onPress} />
+    <Button title="Details" onPress={onPress} />
   </View>
 );
 
@@ -25,6 +26,7 @@ const App = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [source, setSource] = useState("");
+  const router = useRouter(); // Inicializar router
 
   // Simulación de llamada a la API (ajusta la URL a tu API)
   const getPlanetas = async () => {
@@ -47,10 +49,8 @@ const App = () => {
 
   const handleOnPress = (id) => {
     const card = cards.find((card) => card.id === id);
-    setSelectedCard(card);
-    setTitle(card.title);
-    setDescription(card.description);
-    setSource(card.source);
+    setSelectedCard(card); // Guarda la tarjeta seleccionada (si se necesita en el futuro)
+    router.push(`../components/planetDetails?id=${id}`); // Navega a la página con el id del planeta
   };
 
   const handleSave = () => {
@@ -111,12 +111,12 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Ocupa todo el espacio disponible
+    flex: 1,
     backgroundColor: "white",
   },
   scrollView: {
-    paddingVertical: 10, // Espaciado en los elementos
-    alignItems: "center", // Centrar los elementos horizontalmente
+    paddingVertical: 10,
+    alignItems: "center",
   },
   text: {
     fontSize: 28,
