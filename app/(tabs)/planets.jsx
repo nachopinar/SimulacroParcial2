@@ -12,12 +12,13 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { useFocusEffect } from "@react-navigation/native";
 
-const ImageCard = ({ name, difficulty, onPress, isFavorite }) => (
+const ImageCard = ({id, name, difficulty, onPress, isFavorite }) => (
   <View style={styles.imageCard}>
     <Text style={styles.text}>{name}</Text>
     <Text style={styles.text}>{difficulty}</Text>
     <Text style={styles.isFavorite}>{isFavorite}</Text>
     <Button title="Details" onPress={onPress} />
+    <Button title="Delete" onPress={onPress} />
   </View>
 );
 
@@ -62,6 +63,11 @@ const App = () => {
     // Navegar a PlanetDetails con los parámetros de búsqueda
     router.push(`../components/planetDetails?${queryParams}`);
   };
+
+  
+
+
+
 
   return (
     <SafeAreaProvider>
