@@ -60,7 +60,7 @@ const App = () => {
     }).toString();
 
     // Navegar a planetDetails con el ID en la ruta y los datos adicionales en la query string
-    router.push(`/planetDetails/${id}?${queryString}`);
+    router.push(`../components/planetDetails?id=${id}`);
   };
 
   const handleSave = () => {
