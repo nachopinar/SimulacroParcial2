@@ -6,15 +6,17 @@ import {
   View,
   Image,
   Button,
+  TouchableOpacity,
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { useFocusEffect } from "@react-navigation/native";
 
-const ImageCard = ({ image, name, onPress }) => (
+const ImageCard = ({ name, difficulty, onPress, isFavorite }) => (
   <View style={styles.imageCard}>
     <Text style={styles.text}>{name}</Text>
-    <Image source={{ uri: image }} style={styles.image} />
+    <Text style={styles.text}>{difficulty}</Text>
+    <Text style={styles.isFavorite}>{isFavorite}</Text>
     <Button title="Details" onPress={onPress} />
   </View>
 );
@@ -26,7 +28,7 @@ const App = () => {
   // Función para obtener los planetas
   const getPlanetas = async () => {
     try {
-      const response = await fetch("http://192.168.48.64:8000/planets"); // Ajusta tu IP/URL
+      const response = await fetch("http://192.168.48.64:8000/destinations"); // Ajusta tu IP/URL
       if (response.ok) {
         const data = await response.json();
         setCards(data); // Poblar el estado `cards` con los datos obtenidos
@@ -69,7 +71,9 @@ const App = () => {
             <ImageCard
               key={card.id}
               name={card.name}
-              image={card.image}
+              difficulty={card.difficulty}
+              isFavorite={card.isFavorite}
+              //image={card.image}
               onPress={() => handleOnPress(card.id)}
             />
           ))}
@@ -94,6 +98,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
+
+  isFavorite: {
+    backgroundColor: "blue",
+    width: 50,
+  },
+
   image: {
     width: 200,
     height: 200,
