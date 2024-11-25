@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
+import { useFocusEffect } from "@react-navigation/native";
 
 const ImageCard = ({ image, name, onPress }) => (
   <View style={styles.imageCard}>
@@ -22,10 +23,10 @@ const App = () => {
   const [cards, setCards] = useState([]); // Estado para las tarjetas
   const router = useRouter(); // Inicializar router
 
-  // Simulación de llamada a la API (ajusta la URL a tu API)
+  // Función para obtener los planetas
   const getPlanetas = async () => {
     try {
-      const response = await fetch("http://192.168.48.64:8000/planets");
+      const response = await fetch("http://192.168.48.64:8000/planets"); // Ajusta tu IP/URL
       if (response.ok) {
         const data = await response.json();
         setCards(data); // Poblar el estado `cards` con los datos obtenidos
@@ -37,9 +38,12 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
-    getPlanetas();
-  }, []);
+  // Hook que se ejecuta cada vez que la pantalla gana foco
+  useFocusEffect(
+    useCallback(() => {
+      getPlanetas();
+    }, []) // Dependencias vacías para que solo se ejecute al ganar foco
+  );
 
   const handleOnPress = (id) => {
     const card = cards.find((card) => card.id === id);
