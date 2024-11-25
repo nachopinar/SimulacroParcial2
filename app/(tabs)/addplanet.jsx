@@ -6,9 +6,9 @@ import { useRouter } from "expo-router";
 const AddPlanet = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [moons, setMoons] = useState("");
-  const [moonNames, setMoonNames] = useState("");
-  const [image, setImage] = useState("");
+  const [difficulty, setDifficulty] = useState("");
+  const [isFavorite, setIsFavorite] = useState("");
+  //const [image, setImage] = useState("");
   const router = useRouter(); // Inicializar router
 
   // Llamada a la API para agregar un nuevo planeta
@@ -17,12 +17,11 @@ const AddPlanet = () => {
       const payload = {
         name,
         description,
-        moons: parseInt(moons, 10), // Asegúrate de convertir a número
-        moon_names: moonNames.split(",").map((moon) => moon.trim()), // Convierte en array
-        image,
+        isFavorite, // Asegúrate de convertir a número
+        difficulty, // Convierte en array
       };
 
-      const response = await fetch("http://192.168.48.64:8000/planets", {
+      const response = await fetch("http://192.168.48.64:8000/destinations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -33,9 +32,9 @@ const AddPlanet = () => {
         Alert.alert("Éxito", "Planeta agregado correctamente");
         setName("");
         setDescription("");
-        setMoons("");
-        setMoonNames("");
-        setImage("");
+        setDifficulty("");
+        setIsFavorite("");
+        // setImage("");
         router.push("/planets"); // Redirige a la página de planetas
       } else {
         Alert.alert("Error", "No se pudo agregar el planeta");
@@ -49,11 +48,11 @@ const AddPlanet = () => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>Agregar un Nuevo Planeta</Text>
+        <Text style={styles.title}>Agregar un Nuevo Destino</Text>
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Nombre del planeta"
+            placeholder="Nombre del destino"
             value={name}
             onChangeText={setName}
           />
@@ -65,24 +64,24 @@ const AddPlanet = () => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Número de lunas"
-            value={moons}
-            keyboardType="numeric"
-            onChangeText={setMoons}
+            placeholder="Dificultad"
+            value={difficulty}
+            // keyboardType="numeric"
+            onChangeText={setDifficulty}
           />
           <TextInput
             style={styles.input}
-            placeholder="Nombres de las lunas (separados por comas)"
-            value={moonNames}
-            onChangeText={setMoonNames}
+            placeholder="Es Favorito?"
+            value={isFavorite}
+            onChangeText={setIsFavorite}
           />
-          <TextInput
+          {/* <TextInput
             style={styles.input}
             placeholder="URL de la imagen"
             value={image}
             onChangeText={setImage}
-          />
-          <Button title="Agregar Planeta" onPress={addPlanet} />
+          /> */}
+          <Button title="Agregar destino" onPress={addPlanet} />
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
