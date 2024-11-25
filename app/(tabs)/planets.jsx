@@ -50,6 +50,7 @@ const App = () => {
 
     // Serializar los datos de la tarjeta y pasarlos como parámetros de búsqueda
     const queryParams = new URLSearchParams({
+      id: card.id.toString(),
       name: card.name,
       description: card.description,
       moons: card.moons,
