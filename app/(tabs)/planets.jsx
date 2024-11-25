@@ -24,7 +24,7 @@ const ImageCard = ({
     <Text style={styles.text}>{name}</Text>
     <Text style={styles.text}>{difficulty}</Text>
     <Text style={styles.isFavorite}>{isFavorite}</Text>
-    <Button title="Details" onPress={onPress} />
+    <Button title="Edit" onPress={onPress} />
     <Button title="Delete" onPress={handleDelete} />
   </View>
 );
@@ -63,7 +63,7 @@ const App = () => {
       id: card.id.toString(),
       name: card.name,
       description: card.description,
-      difficulty:card.difficulty,
+      difficulty: card.difficulty,
       isFavorite: card.isFavorite,
     }).toString();
 

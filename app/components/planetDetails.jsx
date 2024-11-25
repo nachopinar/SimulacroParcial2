@@ -5,10 +5,11 @@ import {
   Text,
   FlatList,
   StyleSheet,
-  TextInput,
   Alert,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 const PlanetDetails = () => {
   const params = useLocalSearchParams();
@@ -78,9 +79,8 @@ const PlanetDetails = () => {
   // };
 
   return (
-    <View style={styles.container}>
-      // Vista de edición
-      <View>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
         <Text style={styles.subtitle}>Edit Destination</Text>
         <TextInput
           style={styles.input}
@@ -116,8 +116,8 @@ const PlanetDetails = () => {
         >
           <Text style={styles.buttonText}>Cancel</Text>
         </TouchableOpacity> */}
-      </View>
-    </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
@@ -151,13 +151,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
   },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
-  },
   button: {
     backgroundColor: "#4CAF50",
     padding: 10,
@@ -171,5 +164,13 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     backgroundColor: "#f44336",
+  },
+  input: {
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    borderRadius: 5,
   },
 });
