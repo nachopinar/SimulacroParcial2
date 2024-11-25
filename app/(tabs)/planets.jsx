@@ -11,7 +11,6 @@ import {
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 
-
 const ImageCard = ({ image, description, name, onPress }) => (
   <View style={styles.imageCard}>
     <Text style={styles.text}>{name}</Text>
@@ -51,18 +50,17 @@ const App = () => {
   const handleOnPress = (id) => {
     const card = cards.find((card) => card.id === id);
     setSelectedCard(card); // Guarda la tarjeta seleccionada (si se necesita en el futuro)
-    console.log(id);
-    console.log("card esta" + card.name);
-    router.push({
-      pathname: `../components/planetDetails/${id}`,
-      params: {
-        name: card.name,
-        description: card.description,
-        moons: card.moons,
-        moon_names: JSON.stringify(card.moon_names), // Serializar el arreglo
-      },
-    });
 
+    // Construir query string para datos adicionales
+    const queryString = new URLSearchParams({
+      name: card.name,
+      description: card.description,
+      moons: card.moons,
+      moon_names: JSON.stringify(card.moon_names), // Serializar el arreglo
+    }).toString();
+
+    // Navegar a planetDetails con el ID en la ruta y los datos adicionales en la query string
+    router.push(`/planetDetails/${id}?${queryString}`);
   };
 
   const handleSave = () => {
