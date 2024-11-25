@@ -12,13 +12,20 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { useFocusEffect } from "@react-navigation/native";
 
-const ImageCard = ({id, name, difficulty, onPress, isFavorite }) => (
+const ImageCard = ({
+  id,
+  name,
+  difficulty,
+  onPress,
+  isFavorite,
+  handleDelete,
+}) => (
   <View style={styles.imageCard}>
     <Text style={styles.text}>{name}</Text>
     <Text style={styles.text}>{difficulty}</Text>
     <Text style={styles.isFavorite}>{isFavorite}</Text>
     <Button title="Details" onPress={onPress} />
-    <Button title="Delete" onPress={onPress} />
+    <Button title="Delete" onPress={handleDelete} />
   </View>
 );
 
@@ -64,10 +71,48 @@ const App = () => {
     router.push(`../components/planetDetails?${queryParams}`);
   };
 
-  
+  //----------------------------
 
+  const deletePlaneta = async (id) => {
+    try {
+      const response = await fetch(
+        `http://192.168.48.64:8000/destinations/${id}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
+      if (response.ok) {
+        getPlanetas();
+      } else {
+        console.error("Error al obtener los datos");
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+    }
+  };
 
+  const handleDelete = (id) => {
+    console.log("hola");
+    const card = cards.find((card) => card.id === id);
+
+    deletePlaneta(card.id);
+
+    // const response = await fetch(
+    //   "http://192.168.48.64:8000/destinations/${id}",
+    //   {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(payload),
+    //   }
+    // );
+
+    // Navegar a PlanetDetails con los parámetros de búsqueda
+    router.push(`/planets`);
+  };
+
+  //------------------------------
 
   return (
     <SafeAreaProvider>
@@ -81,6 +126,7 @@ const App = () => {
               isFavorite={card.isFavorite}
               //image={card.image}
               onPress={() => handleOnPress(card.id)}
+              handleDelete={() => handleDelete(card.id)}
             />
           ))}
         </ScrollView>
