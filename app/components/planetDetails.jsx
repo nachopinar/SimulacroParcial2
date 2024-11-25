@@ -1,9 +1,9 @@
-import { useSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 
 const PlanetDetails = () => {
-  const { name, description, moons, moon_names } = useSearchParams();
+  const { name, description, moons, moon_names } = useLocalSearchParams();
 
   // Convertir moon_names de string a arreglo
   const moonList = JSON.parse(moon_names || "[]");
