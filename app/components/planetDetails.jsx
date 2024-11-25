@@ -12,19 +12,17 @@ import {
 
 const PlanetDetails = () => {
   const params = useLocalSearchParams();
-  const { id, name, description, moons, moon_names } = params;
+  const { id, name, description, difficulty, isFavorite } = params;
   const router = useRouter();
   console.log("id de este planeta:", params.id);
 
   // Verificar y convertir valores de parámetros
-  const initialMoonList = moon_names ? JSON.parse(moon_names) : [];
-  const initialMoons = moons ? parseInt(moons, 10) : 0;
 
   // Estados para editar
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(true);
   const [newName, setNewName] = useState(name || "");
   const [newDescription, setNewDescription] = useState(description || "");
-  const [newMoons, setNewMoons] = useState(initialMoons.toString());
+  const [newDifficulty, setNewDifficulty] = useState(difficulty || "");
   const [newMoonList, setNewMoonList] = useState(initialMoonList.join(", "));
 
   // Función para guardar cambios (PUT)

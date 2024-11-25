@@ -63,8 +63,8 @@ const App = () => {
       id: card.id.toString(),
       name: card.name,
       description: card.description,
-      moons: card.moons,
-      moon_names: JSON.stringify(card.moon_names),
+      difficulty:card.difficulty,
+      isFavorite: card.isFavorite,
     }).toString();
 
     // Navegar a PlanetDetails con los parámetros de búsqueda
