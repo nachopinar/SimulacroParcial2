@@ -23,27 +23,32 @@ const PlanetDetails = () => {
   const [newName, setNewName] = useState(name || "");
   const [newDescription, setNewDescription] = useState(description || "");
   const [newDifficulty, setNewDifficulty] = useState(difficulty || "");
-  const [newMoonList, setNewMoonList] = useState(initialMoonList.join(", "));
+  const [newIsFavorite, setNewIsFavorite] = useState(isFavorite || "");
 
   // Función para guardar cambios (PUT)
   const handleSave = async () => {
+    console.log("holazaaa");
     try {
       const updatedData = {
         name: newName,
         description: newDescription,
-        moons: parseInt(newMoons, 10),
-        moon_names: newMoonList.split(",").map((moon) => moon.trim()),
+        difficulty: newDifficulty,
+        isFavorite: newIsFavorite,
       };
 
-      const response = await fetch(`http://192.168.48.64:8000/planets/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedData),
-      });
+      const response = await fetch(
+        `http://192.168.48.64:8000/destinations/${id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updatedData),
+        }
+      );
 
       if (response.ok) {
         Alert.alert("Success", "Planet updated successfully!");
-        setEditMode(false); // Salir del modo de edición
+        //setEditMode(false); // Salir del modo de edición
+        router.push("../(tabs)/planets");
       } else {
         Alert.alert("Error", "Failed to update planet.");
       }
@@ -54,30 +59,30 @@ const PlanetDetails = () => {
   };
 
   // Función para eliminar (DELETE)
-  const handleDelete = async () => {
-    try {
-      const response = await fetch(`http://192.168.48.64:8000/planets/${id}`, {
-        method: "DELETE",
-      });
+  // const handleDelete = async () => {
+  //   try {
+  //     const response = await fetch(`http://192.168.48.64:8000/planets/${id}`, {
+  //       method: "DELETE",
+  //     });
 
-      if (response.ok) {
-        Alert.alert("Deleted", "Planet deleted successfully!");
-        router.push("/"); // Redirigir a la pantalla principal tras eliminar
-      } else {
-        Alert.alert("Error", "Failed to delete planet.");
-      }
-    } catch (error) {
-      Alert.alert("Error", "An error occurred while deleting the planet.");
-      console.error(error);
-    }
-  };
+  //     if (response.ok) {
+  //       Alert.alert("Deleted", "Planet deleted successfully!");
+  //       router.push("/"); // Redirigir a la pantalla principal tras eliminar
+  //     } else {
+  //       Alert.alert("Error", "Failed to delete planet.");
+  //     }
+  //   } catch (error) {
+  //     Alert.alert("Error", "An error occurred while deleting the planet.");
+  //     console.error(error);
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
       {editMode ? (
         // Vista de edición
         <View>
-          <Text style={styles.subtitle}>Edit Planet</Text>
+          <Text style={styles.subtitle}>Edit Destination</Text>
           <TextInput
             style={styles.input}
             value={newName}
@@ -92,22 +97,22 @@ const PlanetDetails = () => {
           />
           <TextInput
             style={styles.input}
-            value={newMoons}
-            onChangeText={setNewMoons}
-            placeholder="Number of Moons"
-            keyboardType="numeric"
+            value={newDifficulty}
+            onChangeText={setNewDifficulty}
+            placeholder="Dificulty"
+            // keyboardType="numeric"
           />
           <TextInput
             style={styles.input}
-            value={newMoonList}
-            onChangeText={setNewMoonList}
-            placeholder="Moon Names (comma-separated)"
+            value={newIsFavorite}
+            onChangeText={setNewIsFavorite}
+            placeholder="Es favorito?"
           />
           <TouchableOpacity onPress={handleSave} style={styles.button}>
             <Text style={styles.buttonText}>Save Changes</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => setEditMode(false)}
+            onPress={() => setEditMode(true)}
             style={styles.button}
           >
             <Text style={styles.buttonText}>Cancel</Text>
