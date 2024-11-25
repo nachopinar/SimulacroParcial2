@@ -19,7 +19,7 @@ const PlanetDetails = () => {
   // Verificar y convertir valores de parámetros
 
   // Estados para editar
-  const [editMode, setEditMode] = useState(true);
+  //const [editMode, setEditMode] = useState(true);
   const [newName, setNewName] = useState(name || "");
   const [newDescription, setNewDescription] = useState(description || "");
   const [newDifficulty, setNewDifficulty] = useState(difficulty || "");
@@ -79,78 +79,44 @@ const PlanetDetails = () => {
 
   return (
     <View style={styles.container}>
-      {editMode ? (
-        // Vista de edición
-        <View>
-          <Text style={styles.subtitle}>Edit Destination</Text>
-          <TextInput
-            style={styles.input}
-            value={newName}
-            onChangeText={setNewName}
-            placeholder="Name"
-          />
-          <TextInput
-            style={styles.input}
-            value={newDescription}
-            onChangeText={setNewDescription}
-            placeholder="Description"
-          />
-          <TextInput
-            style={styles.input}
-            value={newDifficulty}
-            onChangeText={setNewDifficulty}
-            placeholder="Dificulty"
-            // keyboardType="numeric"
-          />
-          <TextInput
-            style={styles.input}
-            value={newIsFavorite}
-            onChangeText={setNewIsFavorite}
-            placeholder="Es favorito?"
-          />
-          <TouchableOpacity onPress={handleSave} style={styles.button}>
-            <Text style={styles.buttonText}>Save Changes</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => setEditMode(true)}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Cancel</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        // Vista normal
-        <View>
-          <Text style={styles.title}>{name}</Text>
-          <Text style={styles.description}>{description}</Text>
-          <Text style={styles.moons}>Total moons: {moons}</Text>
-
-          <Text style={styles.subtitle}>Top 5 Moons:</Text>
-          <FlatList
-            data={initialMoonList.slice(0, 5)} // Mostrar las primeras 5 lunas
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
-              <Text style={styles.moonItem}>{item}</Text>
-            )}
-          />
-
-          <TouchableOpacity
-            onPress={() => {
-              console.log("Entering Edit Mode");
-              setEditMode(true); // Activa el modo de edición
-            }}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Edit</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={handleDelete}
-            style={[styles.button, styles.deleteButton]}
-          >
-            <Text style={styles.buttonText}>Delete</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      // Vista de edición
+      <View>
+        <Text style={styles.subtitle}>Edit Destination</Text>
+        <TextInput
+          style={styles.input}
+          value={newName}
+          onChangeText={setNewName}
+          placeholder="Name"
+        />
+        <TextInput
+          style={styles.input}
+          value={newDescription}
+          onChangeText={setNewDescription}
+          placeholder="Description"
+        />
+        <TextInput
+          style={styles.input}
+          value={newDifficulty}
+          onChangeText={setNewDifficulty}
+          placeholder="Dificulty"
+          // keyboardType="numeric"
+        />
+        <TextInput
+          style={styles.input}
+          value={newIsFavorite}
+          onChangeText={setNewIsFavorite}
+          placeholder="Es favorito?"
+        />
+        <TouchableOpacity onPress={handleSave} style={styles.button}>
+          <Text style={styles.buttonText}>Save Changes</Text>
+        </TouchableOpacity>
+        {/* <TouchableOpacity
+          onPress={() => setEditMode(true)}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Cancel</Text>
+        </TouchableOpacity> */}
+      </View>
     </View>
   );
 };
