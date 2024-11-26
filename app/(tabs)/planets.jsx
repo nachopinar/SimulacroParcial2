@@ -19,9 +19,11 @@ const ImageCard = ({
   onPress,
   isFavorite,
   handleDelete,
+  description,
 }) => (
   <View style={styles.imageCard}>
     <Text style={styles.text}>{name}</Text>
+    <Text style={styles.text}>{description}</Text>
     <Text style={styles.text}>{difficulty}</Text>
     <Text style={styles.isFavorite}>{isFavorite}</Text>
     <Button title="Edit" onPress={onPress} />
@@ -122,6 +124,7 @@ const App = () => {
             <ImageCard
               key={card.id}
               name={card.name}
+              description={card.description}
               difficulty={card.difficulty}
               isFavorite={card.isFavorite}
               //image={card.image}
